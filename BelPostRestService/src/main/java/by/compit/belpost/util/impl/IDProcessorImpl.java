@@ -19,7 +19,6 @@ public class IDProcessorImpl implements IDProcessor {
         for (int i = 0; i < jsonArray.length(); i++) {
             id = jsonArray.getJSONObject(i).getInt(ID_PARAMETER);
         }
-
         return id;
 
     }

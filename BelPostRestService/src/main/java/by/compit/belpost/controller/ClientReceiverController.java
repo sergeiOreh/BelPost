@@ -28,13 +28,7 @@ public class ClientReceiverController {
     @RequestMapping(value = GET_OPER_4_PO_URL, method = RequestMethod.POST, consumes = "application/json", produces = "application/json; charset=utf-8")
     public String getCityNameById(@RequestBody String request) {
 
-        System.out.println(request);
-
-        return responseGetter.getResponseByCityId(
-                idProcessor.getId(
-                        new JSONArray(
-                                request)))
-                .toString();
+        return responseGetter.getResponseByCityId(idProcessor.getId(new JSONArray(request))).toString();
     }
 
 

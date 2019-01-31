@@ -19,10 +19,15 @@ public class ResponseGetterImpl implements ResponseGetter {
     @Override
     public JSONArray getResponseByCityId(Integer id) {
 
+        System.out.println("ResponseGetterImpl=>");
+        System.out.println("id" + id);
+
         JSONArray response = new JSONArray();
 
         response.put(responseRepository.findByCityId(id));
 
-        return null;
+        System.out.println("response" + response);
+
+        return response;
     }
 }

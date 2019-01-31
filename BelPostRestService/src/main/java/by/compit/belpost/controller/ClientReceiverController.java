@@ -25,18 +25,16 @@ public class ClientReceiverController {
         this.idProcessor = idProcessor;
     }
 
-//    @RequestMapping(value = GET_OPER_4_PO_URL, method = RequestMethod.POST, consumes = "application/json", produces = "application/json; charset=utf-8")
-//    public String getGetOper4Po(@RequestBody String request) {
-//
-//        return responseRepository.findAll(request);
-//    }
-
     @RequestMapping(value = GET_OPER_4_PO_URL, method = RequestMethod.POST, consumes = "application/json", produces = "application/json; charset=utf-8")
     public String getCityNameById(@RequestBody String request) {
 
         System.out.println(request);
 
-        return responseGetter.getResponseByCityId(idProcessor.getId(new JSONArray(request))).toString();
+        return responseGetter.getResponseByCityId(
+                idProcessor.getId(
+                        new JSONArray(
+                                request)))
+                .toString();
     }
 
 

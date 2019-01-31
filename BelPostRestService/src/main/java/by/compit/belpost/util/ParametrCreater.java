@@ -2,7 +2,9 @@ package by.compit.belpost.util;
 
 import org.json.JSONArray;
 
-public interface IDProcessor {
+public interface ParametrCreater {
 
     Integer getId(JSONArray jsonArray);
+
+    String getCode(JSONArray jsonArray);
 }

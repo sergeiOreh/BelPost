@@ -5,5 +5,7 @@ import org.json.JSONArray;
 public interface ResponseGetter {
 
     JSONArray getResponseByCityId(Integer id);
+    JSONArray getResponseByCode(String code);
+
 
 }

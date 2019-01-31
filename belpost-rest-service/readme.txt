@@ -1,0 +1,1 @@
+java -Dlogging.config="file:D:\Oreshko\CompitIdeaProjects\conf\belpost-rest-service\log4j2.xml" -jar belpost-rest-service-1.0-SNAPSHOT.jar --spring.config.location="file:D:\Oreshko\CompitIdeaProjects\conf\belpost-rest-service\application.properties","file:D:\Oreshko\CompitIdeaProjects\conf\belpost-rest-service\settings.properties"

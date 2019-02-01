@@ -19,25 +19,17 @@ public class ClientReceiverController {
 
     private final ResponseGetter responseGetter;
     private final ParametrCreater parametrCreater;
-    private final RefcursorRepository refcursorRepository;
 
     @Autowired
-    public ClientReceiverController(ResponseGetter responseGetter, ParametrCreater parametrCreater, RefcursorRepository refcursorRepository) {
+    public ClientReceiverController(ResponseGetter responseGetter, ParametrCreater parametrCreater) {
         this.responseGetter = responseGetter;
         this.parametrCreater = parametrCreater;
-        this.refcursorRepository = refcursorRepository;
     }
-
-//    @RequestMapping(value = GET_OPER_4_PO_URL, method = RequestMethod.POST, consumes = "application/json", produces = "application/json; charset=utf-8")
-//    public String getCityNameById(@RequestBody String request) {
-//
-//        return responseGetter.getResponseByCityId(parametrCreater.getId(new JSONArray(request))).toString();
-//    }
 
     @RequestMapping(value = GET_OPER_4_PO_URL, method = RequestMethod.POST, consumes = "application/json", produces = "application/json; charset=utf-8")
     public String getResponses(@RequestBody String request) {
 
-        return responseGetter.getResponseByCode(parametrCreater.getCode(new JSONArray(request))).toString();
+        return responseGetter.getResponseByCodes(parametrCreater.getCodes(new JSONArray(request))).toString();
     }
 
 

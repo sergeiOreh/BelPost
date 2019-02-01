@@ -2,28 +2,25 @@ package by.compit.belpost.entity;
 
 import org.hibernate.annotations.NamedNativeQuery;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
-@Entity
-@NamedNativeQuery(
-        name = "functionCall",
-        callable = true,
-        query = "{? = call PKG_EXP_PORTAL.GET_OPER_4_PO(?)}",
-        resultClass = Response.class)
-public class Response implements Serializable{
+public class Response implements Serializable {
 
-
-
-//    private String code;
+    private String code;
     private String otoDate;
     private String operName;
     private String orgCur;
     private String zipCodeNext;
 
-    @Column(name = "OTO_DATE")
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
     public String getOtoDate() {
         return otoDate;
     }
@@ -32,7 +29,6 @@ public class Response implements Serializable{
         this.otoDate = otoDate;
     }
 
-    @Column(name = "OPER_NAME")
     public String getOperName() {
         return operName;
     }
@@ -41,7 +37,6 @@ public class Response implements Serializable{
         this.operName = operName;
     }
 
-    @Column(name = "ORG_CUR")
     public String getOrgCur() {
         return orgCur;
     }
@@ -50,8 +45,6 @@ public class Response implements Serializable{
         this.orgCur = orgCur;
     }
 
-    @Id
-    @Column(name = "ZIPCODE_NEXT")
     public String getZipCodeNext() {
         return zipCodeNext;
     }
@@ -67,6 +60,7 @@ public class Response implements Serializable{
 
         Response response = (Response) o;
 
+        if (code != null ? !code.equals(response.code) : response.code != null) return false;
         if (otoDate != null ? !otoDate.equals(response.otoDate) : response.otoDate != null) return false;
         if (operName != null ? !operName.equals(response.operName) : response.operName != null) return false;
         if (orgCur != null ? !orgCur.equals(response.orgCur) : response.orgCur != null) return false;
@@ -75,7 +69,8 @@ public class Response implements Serializable{
 
     @Override
     public int hashCode() {
-        int result = otoDate != null ? otoDate.hashCode() : 0;
+        int result = code != null ? code.hashCode() : 0;
+        result = 31 * result + (otoDate != null ? otoDate.hashCode() : 0);
         result = 31 * result + (operName != null ? operName.hashCode() : 0);
         result = 31 * result + (orgCur != null ? orgCur.hashCode() : 0);
         result = 31 * result + (zipCodeNext != null ? zipCodeNext.hashCode() : 0);
@@ -85,12 +80,11 @@ public class Response implements Serializable{
     @Override
     public String toString() {
         return "Response{" +
-                "otoDate='" + otoDate + '\'' +
+                "code='" + code + '\'' +
+                ", otoDate='" + otoDate + '\'' +
                 ", operName='" + operName + '\'' +
                 ", orgCur='" + orgCur + '\'' +
                 ", zipCodeNext='" + zipCodeNext + '\'' +
                 '}';
     }
-
-
 }

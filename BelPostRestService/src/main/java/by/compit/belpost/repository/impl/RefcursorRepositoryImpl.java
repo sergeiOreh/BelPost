@@ -31,7 +31,7 @@ public class RefcursorRepositoryImpl implements RefcursorRepository {
     }
 
     @Override
-    public List<Response> getResponseByCode(String code) {
+    public List<Response> getResponseByCode(String code) throws NotFoundException {
 
         try {
             Connection con = connection.getConnection();
@@ -58,6 +58,7 @@ public class RefcursorRepositoryImpl implements RefcursorRepository {
 
             st.close();
             con.close();
+            if (responseList.size() == 0) throw new NotFoundException();
             return responseList;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -68,7 +69,7 @@ public class RefcursorRepositoryImpl implements RefcursorRepository {
     }
 
     @Override
-    public List<Response> getResponseByLot(String login, String lotNum, String startDate, String endDate) throws ParseException {
+    public List<Response> getResponseByLot(String login, String lotNum, String startDate, String endDate) throws ParseException, NotFoundException {
         try {
 
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -104,6 +105,7 @@ public class RefcursorRepositoryImpl implements RefcursorRepository {
 
             st.close();
             con.close();
+            if (responseList.size() == 0) throw new NotFoundException();
             return responseList;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -113,7 +115,7 @@ public class RefcursorRepositoryImpl implements RefcursorRepository {
     }
 
     @Override
-    public List<Response> getResponseByDiapason(String codeStart, String codeFinish) {
+    public List<Response> getResponseByDiapason(String codeStart, String codeFinish) throws NotFoundException {
         try {
             Connection con = connection.getConnection();
             Response response;
@@ -140,6 +142,7 @@ public class RefcursorRepositoryImpl implements RefcursorRepository {
 
             st.close();
             con.close();
+            if (responseList.size() == 0) throw new NotFoundException();
             return responseList;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());

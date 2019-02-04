@@ -10,10 +10,11 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.sql.Date;
 import java.util.List;
 
 @Repository
@@ -67,6 +68,7 @@ public class RefcursorRepositoryImpl implements RefcursorRepository {
     @Override
     public List<Response> getResponseByLot(String login, String lotNum, String startDate, String endDate) {
         try {
+
             Connection con = connection.getConnection();
             Response response;
             List<Response> responseList = new ArrayList<>();
@@ -78,8 +80,8 @@ public class RefcursorRepositoryImpl implements RefcursorRepository {
             st.registerOutParameter(1, OracleTypes.CURSOR);
             st.setString(2, login);
             st.setString(3, lotNum);
-            st.setString(4, startDate);
-            st.setString(5, endDate);
+            st.setDate(4, Date.valueOf(startDate));
+            st.setDate(5, Date.valueOf(endDate));
             System.out.println(st.execute());
             ResultSet rs = st.getCursor(1);
             while (rs.next()) {
@@ -115,7 +117,7 @@ public class RefcursorRepositoryImpl implements RefcursorRepository {
                     (OracleCallableStatement) con.prepareCall(stmt);
             st.registerOutParameter(1, OracleTypes.CURSOR);
             st.setString(2, codeStart);
-            st.setString(2, codeFinish);
+            st.setString(3, codeFinish);
             System.out.println(st.execute());
             ResultSet rs = st.getCursor(1);
             while (rs.next()) {

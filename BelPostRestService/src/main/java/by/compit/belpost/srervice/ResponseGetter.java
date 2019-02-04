@@ -6,7 +6,11 @@ import java.util.ArrayList;
 
 public interface ResponseGetter {
 
-    JSONArray getResponseByCodes(ArrayList<String> code);
+    JSONArray getResponseByPo(String code);
+
+    JSONArray getResponseByLot(String login, String lotNum, String startDate, String endDate);
+
+    JSONArray getResponseByDiapason(String codeStart, String codeFinish);
 
 
 }

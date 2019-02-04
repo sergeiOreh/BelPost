@@ -1,5 +1,6 @@
 package by.compit.belpost.controller;
 
+import by.compit.belpost.exception.NotFoundException;
 import by.compit.belpost.srervice.ResponseGetter;
 import by.compit.belpost.util.ParametrCreator;
 import org.json.JSONArray;
@@ -8,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.text.ParseException;
 
 @RestController
 public class ClientController {
@@ -27,13 +30,13 @@ public class ClientController {
     }
 
     @RequestMapping(value = GET_OPER_4_PO_URL, method = RequestMethod.POST, consumes = "application/json", produces = "application/json; charset=utf-8")
-    public String getResponses4Po(@RequestBody String request) {
+    public String getResponses4Po(@RequestBody String request) throws NotFoundException{
 
         return responseGetter.getResponseByPo(parametrCreator.getCode(new JSONArray(request))).toString();
     }
 
     @RequestMapping(value = GET_OPER_4_LOT_URL, method = RequestMethod.POST, consumes = "application/json", produces = "application/json; charset=utf-8")
-    public String getResponses4Lot(@RequestBody String request) {
+    public String getResponses4Lot(@RequestBody String request) throws ParseException {
 
         return responseGetter.getResponseByLot(parametrCreator.getLogin(new JSONArray(request)),
                 parametrCreator.getLotNum(new JSONArray(request)),

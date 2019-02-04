@@ -1,6 +1,7 @@
 package by.compit.belpost.util;
 
 import by.compit.belpost.entity.ErrorMessage;
+import by.compit.belpost.exception.NotFoundException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONException;
@@ -10,6 +11,8 @@ import org.springframework.core.annotation.Order;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.text.ParseException;
 
 /**
  * Класс JSONExceptionHandler - обработчик исключений, которые могут возникнуть
@@ -24,6 +27,7 @@ public class JSONExceptionHandler {
     private static final int JSON_EXCEPTION_CODE = 400;
 
     private static final String JSON_EXCEPTION_MESSAGE = "Invalid Parameter";
+    private static final String DATE_FORMAT_EXCEPTION_MESSAGE = "Invalid Date Parameter";
 
     /**
      * @return объекта типа {@link ErrorMessage}
@@ -37,6 +41,16 @@ public class JSONExceptionHandler {
 
         errorMessage.setErrorcode(JSON_EXCEPTION_CODE);
         errorMessage.setMessage(JSON_EXCEPTION_MESSAGE);
+
+        return errorMessage;
+    }
+
+    @ExceptionHandler(ParseException.class)
+    public ErrorMessage handleNotFoundException() {
+        ErrorMessage errorMessage = new ErrorMessage();
+
+        errorMessage.setErrorcode(JSON_EXCEPTION_CODE);
+        errorMessage.setMessage(DATE_FORMAT_EXCEPTION_MESSAGE);
 
         return errorMessage;
     }

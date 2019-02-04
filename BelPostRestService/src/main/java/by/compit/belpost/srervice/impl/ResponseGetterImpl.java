@@ -6,6 +6,8 @@ import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.text.ParseException;
+
 @Component
 public class ResponseGetterImpl implements ResponseGetter {
 
@@ -24,7 +26,7 @@ public class ResponseGetterImpl implements ResponseGetter {
     }
 
     @Override
-    public JSONArray getResponseByLot(String login, String lotNum, String startDate, String endDate) {
+    public JSONArray getResponseByLot(String login, String lotNum, String startDate, String endDate) throws ParseException {
         JSONArray response = new JSONArray();
         response.put(refcursorRepositoryImpl.getResponseByLot(login, lotNum, startDate, endDate));
         return response;

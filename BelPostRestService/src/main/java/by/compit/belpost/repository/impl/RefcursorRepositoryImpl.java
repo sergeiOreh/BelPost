@@ -1,6 +1,7 @@
 package by.compit.belpost.repository.impl;
 
 import by.compit.belpost.entity.Response;
+import by.compit.belpost.exception.NotFoundException;
 import by.compit.belpost.repository.RefcursorRepository;
 import by.compit.belpost.srervice.ConnectionService;
 import oracle.jdbc.OracleCallableStatement;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.sql.Date;
@@ -66,8 +68,14 @@ public class RefcursorRepositoryImpl implements RefcursorRepository {
     }
 
     @Override
-    public List<Response> getResponseByLot(String login, String lotNum, String startDate, String endDate) {
+    public List<Response> getResponseByLot(String login, String lotNum, String startDate, String endDate) throws ParseException {
         try {
+
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            java.util.Date start = formatter.parse(startDate);
+            java.util.Date end = formatter.parse(endDate);
+            System.out.println(start);
+            System.out.println(end);
 
             Connection con = connection.getConnection();
             Response response;
@@ -80,8 +88,8 @@ public class RefcursorRepositoryImpl implements RefcursorRepository {
             st.registerOutParameter(1, OracleTypes.CURSOR);
             st.setString(2, login);
             st.setString(3, lotNum);
-            st.setDate(4, Date.valueOf(startDate));
-            st.setDate(5, Date.valueOf(endDate));
+            st.setDate(4, new Date(start.getTime()));
+            st.setDate(5, new Date(end.getTime()));
             System.out.println(st.execute());
             ResultSet rs = st.getCursor(1);
             while (rs.next()) {

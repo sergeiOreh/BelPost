@@ -6,6 +6,7 @@ import by.compit.belpost.repository.RefcursorRepository;
 import by.compit.belpost.srervice.ConnectionService;
 import oracle.jdbc.OracleCallableStatement;
 import oracle.jdbc.OracleTypes;
+import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,12 +43,12 @@ public class RefcursorRepositoryImpl implements RefcursorRepository {
      */
     @SuppressWarnings("Duplicates")
     @Override
-    public List<Response> getResponseByCode(String code) throws NotFoundException {
+    public JSONArray getResponseByCode(String code) throws NotFoundException {
 
         try {
             Connection con = connection.getConnection();
             Response response;
-            List<Response> responseList = new ArrayList<>();
+            JSONArray responseList = new JSONArray();
 
             String stmt = "{? = call PKG_EXP_PORTAL.GET_OPER_4_PO(?)}";
 
@@ -55,7 +56,7 @@ public class RefcursorRepositoryImpl implements RefcursorRepository {
                     (OracleCallableStatement) con.prepareCall(stmt);
             st.registerOutParameter(1, OracleTypes.CURSOR);
             st.setString(2, code);
-            System.out.println(st.execute());
+            st.execute();
             ResultSet rs = st.getCursor(1);
             while (rs.next()) {
                 response = new Response();
@@ -64,12 +65,12 @@ public class RefcursorRepositoryImpl implements RefcursorRepository {
                 response.setOperName(rs.getString(3));
                 response.setOrgCur(rs.getString(4));
                 response.setZipCodeNext(rs.getString(5));
-                responseList.add(response);
+                responseList.put(response);
             }
 
             st.close();
             con.close();
-            if (responseList.size() == 0) throw new NotFoundException();
+            if (responseList.length() == 0) throw new NotFoundException();
             return responseList;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -91,7 +92,7 @@ public class RefcursorRepositoryImpl implements RefcursorRepository {
      */
     @SuppressWarnings("Duplicates")
     @Override
-    public List<Response> getResponseByLot(String login, String lotNum, String startDate, String endDate) throws ParseException, NotFoundException {
+    public JSONArray getResponseByLot(String login, String lotNum, String startDate, String endDate) throws ParseException, NotFoundException {
         try {
 
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -100,7 +101,7 @@ public class RefcursorRepositoryImpl implements RefcursorRepository {
 
             Connection con = connection.getConnection();
             Response response;
-            List<Response> responseList = new ArrayList<>();
+            JSONArray responseList = new JSONArray();
 
             String stmt = "{? = call PKG_EXP_PORTAL.GET_OPER_4_LOT(?,?,?,?)}";
 
@@ -111,7 +112,7 @@ public class RefcursorRepositoryImpl implements RefcursorRepository {
             st.setString(3, lotNum);
             st.setDate(4, new Date(start.getTime()));
             st.setDate(5, new Date(end.getTime()));
-            System.out.println(st.execute());
+            st.execute();
             ResultSet rs = st.getCursor(1);
             while (rs.next()) {
                 response = new Response();
@@ -120,12 +121,12 @@ public class RefcursorRepositoryImpl implements RefcursorRepository {
                 response.setOperName(rs.getString(3));
                 response.setOrgCur(rs.getString(4));
                 response.setZipCodeNext(rs.getString(5));
-                responseList.add(response);
+                responseList.put(response);
             }
 
             st.close();
             con.close();
-            if (responseList.size() == 0) throw new NotFoundException();
+            if (responseList.length() == 0) throw new NotFoundException();
             return responseList;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -144,11 +145,11 @@ public class RefcursorRepositoryImpl implements RefcursorRepository {
      */
     @SuppressWarnings("Duplicates")
     @Override
-    public List<Response> getResponseByDiapason(String codeStart, String codeFinish) throws NotFoundException {
+    public JSONArray getResponseByDiapason(String codeStart, String codeFinish) throws NotFoundException {
         try {
             Connection con = connection.getConnection();
             Response response;
-            List<Response> responseList = new ArrayList<>();
+            JSONArray responseList = new JSONArray();
 
             String stmt = "{? = call PKG_EXP_PORTAL.GET_OPER_4_DIAPASON(?,?)}";
 
@@ -157,7 +158,7 @@ public class RefcursorRepositoryImpl implements RefcursorRepository {
             st.registerOutParameter(1, OracleTypes.CURSOR);
             st.setString(2, codeStart);
             st.setString(3, codeFinish);
-            System.out.println(st.execute());
+            st.execute();
             ResultSet rs = st.getCursor(1);
             while (rs.next()) {
                 response = new Response();
@@ -166,12 +167,12 @@ public class RefcursorRepositoryImpl implements RefcursorRepository {
                 response.setOperName(rs.getString(3));
                 response.setOrgCur(rs.getString(4));
                 response.setZipCodeNext(rs.getString(5));
-                responseList.add(response);
+                responseList.put(response);
             }
 
             st.close();
             con.close();
-            if (responseList.size() == 0) throw new NotFoundException();
+            if (responseList.length() == 0) throw new NotFoundException();
             return responseList;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());

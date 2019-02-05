@@ -1,10 +1,10 @@
 package by.compit.belpost.entity;
 
-import org.hibernate.annotations.NamedNativeQuery;
-
-import javax.persistence.*;
 import java.io.Serializable;
 
+/**
+ * Класс Response предназначен для хранения и последующего отображения параметров ответа пользователю.
+ */
 public class Response implements Serializable {
 
     private String code;

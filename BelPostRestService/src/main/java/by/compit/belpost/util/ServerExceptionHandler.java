@@ -39,6 +39,9 @@ public class ServerExceptionHandler {
         return errorMessage;
     }
 
+    /**
+     * @return объекта типа {@link ErrorMessage}
+     */
     @ResponseBody
     @ExceptionHandler(NotFoundException.class)
     public ErrorMessage handleNotFoundException() {

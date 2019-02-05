@@ -45,6 +45,9 @@ public class JSONExceptionHandler {
         return errorMessage;
     }
 
+    /**
+     * @return объекта типа {@link ErrorMessage}
+     */
     @ExceptionHandler(ParseException.class)
     public ErrorMessage handleNotFoundException() {
         ErrorMessage errorMessage = new ErrorMessage();

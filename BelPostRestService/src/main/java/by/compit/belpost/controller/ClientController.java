@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.text.ParseException;
 
+/**
+ * Класс ClientController предназначен для взаимодействия с пользователем через url
+ * и получения ответа
+ */
 @RestController
 public class ClientController {
 
@@ -29,12 +33,21 @@ public class ClientController {
         this.parametrCreator = parametrCreator;
     }
 
+    /**
+     * @return ответ по переданным в теле запроса параметрам
+     * @throws NotFoundException, если нет ответа по данным параметрам
+     */
     @RequestMapping(value = GET_OPER_4_PO_URL, method = RequestMethod.POST, consumes = "application/json", produces = "application/json; charset=utf-8")
     public String getResponses4Po(@RequestBody String request) throws NotFoundException{
 
         return responseGetter.getResponseByPo(parametrCreator.getCode(new JSONArray(request))).toString();
     }
 
+    /**
+     * @return ответ по переданным в теле запроса параметрам
+     * @throws NotFoundException, если нет ответа по данным параметрам
+     * @throws ParseException, если введён неверный формат даты
+     */
     @RequestMapping(value = GET_OPER_4_LOT_URL, method = RequestMethod.POST, consumes = "application/json", produces = "application/json; charset=utf-8")
     public String getResponses4Lot(@RequestBody String request) throws ParseException, NotFoundException {
 
@@ -44,6 +57,10 @@ public class ClientController {
                 parametrCreator.getEndDate(new JSONArray(request))).toString();
     }
 
+    /**
+     * @return ответ по переданным в теле запроса параметрам
+     * @throws NotFoundException, если нет ответа по данным параметрам
+     */
     @RequestMapping(value = GET_OPER_4_DIAPASON_URL, method = RequestMethod.POST, consumes = "application/json", produces = "application/json; charset=utf-8")
     public String getResponses4Diapason(@RequestBody String request) throws NotFoundException{
 

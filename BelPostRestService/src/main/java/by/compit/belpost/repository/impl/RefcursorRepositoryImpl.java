@@ -19,6 +19,9 @@ import java.util.ArrayList;
 import java.sql.Date;
 import java.util.List;
 
+/**
+ * Класс RefcursorRepositoryImpl предназначен для получения ответов из базы данных по созданным в ней функциям.
+ */
 @Repository
 @Transactional
 public class RefcursorRepositoryImpl implements RefcursorRepository {
@@ -30,6 +33,14 @@ public class RefcursorRepositoryImpl implements RefcursorRepository {
         this.connection = connection;
     }
 
+    /**
+     * Возвращает список ответов по переданному в функцию параметру.
+     *
+     * @param code - переданный в функцию параметр
+     * @return список ответов
+     * @throws NotFoundException, если нет ответа по данным параметрам
+     */
+    @SuppressWarnings("Duplicates")
     @Override
     public List<Response> getResponseByCode(String code) throws NotFoundException {
 
@@ -65,9 +76,20 @@ public class RefcursorRepositoryImpl implements RefcursorRepository {
             ex.printStackTrace();
         }
         return null;
-
     }
 
+    /**
+     * Возвращает список ответов по переданному в функцию параметру.
+     *
+     * @param login - переданный в функцию параметр
+     * @param lotNum - переданный в функцию параметр
+     * @param startDate - переданный в функцию параметр
+     * @param endDate - переданный в функцию параметр
+     * @return список ответов
+     * @throws NotFoundException, если нет ответа по данным параметрам
+     * @throws ParseException, если введён неверный формат даты
+     */
+    @SuppressWarnings("Duplicates")
     @Override
     public List<Response> getResponseByLot(String login, String lotNum, String startDate, String endDate) throws ParseException, NotFoundException {
         try {
@@ -75,8 +97,6 @@ public class RefcursorRepositoryImpl implements RefcursorRepository {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             java.util.Date start = formatter.parse(startDate);
             java.util.Date end = formatter.parse(endDate);
-            System.out.println(start);
-            System.out.println(end);
 
             Connection con = connection.getConnection();
             Response response;
@@ -114,6 +134,15 @@ public class RefcursorRepositoryImpl implements RefcursorRepository {
         return null;
     }
 
+    /**
+     * Возвращает список ответов по переданному в функцию параметру.
+     *
+     * @param codeStart - переданный в функцию параметр
+     * @param codeFinish - переданный в функцию параметр
+     * @return список ответов
+     * @throws NotFoundException, если нет ответа по данным параметрам
+     */
+    @SuppressWarnings("Duplicates")
     @Override
     public List<Response> getResponseByDiapason(String codeStart, String codeFinish) throws NotFoundException {
         try {

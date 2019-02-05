@@ -4,7 +4,6 @@ import by.compit.belpost.exception.NotFoundException;
 import org.json.JSONArray;
 
 import java.text.ParseException;
-import java.util.ArrayList;
 
 public interface ResponseGetter {
 

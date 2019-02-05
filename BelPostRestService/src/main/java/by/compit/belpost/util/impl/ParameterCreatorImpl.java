@@ -7,6 +7,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 
+/**
+ * Класс ParameterCreatorImpl содержит реализацию методов по парсингу параметров из формата {@link JSONArray}.
+ */
 @Component
 public class ParameterCreatorImpl implements ParametrCreator {
 
@@ -25,6 +28,9 @@ public class ParameterCreatorImpl implements ParametrCreator {
     @Value("${code.finish.parameter}")
     private String CODE_FINISH_PARAMETER;
 
+    /**
+     * @return параметр типа {@link String}
+     */
     @Override
     public String getCode(JSONArray jsonArray) {
         for (int i = 0; i < jsonArray.length(); i++) {
@@ -33,6 +39,9 @@ public class ParameterCreatorImpl implements ParametrCreator {
         return null;
     }
 
+    /**
+     * @return параметр типа {@link String}
+     */
     @Override
     public String getLogin(JSONArray jsonArray) {
         for (int i = 0; i < jsonArray.length(); i++) {
@@ -41,6 +50,9 @@ public class ParameterCreatorImpl implements ParametrCreator {
         return null;
     }
 
+    /**
+     * @return параметр типа {@link String}
+     */
     @Override
     public String getLotNum(JSONArray jsonArray) {
         for (int i = 0; i < jsonArray.length(); i++) {
@@ -49,6 +61,9 @@ public class ParameterCreatorImpl implements ParametrCreator {
         return null;
     }
 
+    /**
+     * @return параметр типа {@link String}
+     */
     @Override
     public String getStartDate(JSONArray jsonArray) {
         for (int i = 0; i < jsonArray.length(); i++) {
@@ -57,6 +72,9 @@ public class ParameterCreatorImpl implements ParametrCreator {
         return null;
     }
 
+    /**
+     * @return параметр типа {@link String}
+     */
     @Override
     public String getEndDate(JSONArray jsonArray) {
         for (int i = 0; i < jsonArray.length(); i++) {
@@ -65,6 +83,9 @@ public class ParameterCreatorImpl implements ParametrCreator {
         return null;
     }
 
+    /**
+     * @return параметр типа {@link String}
+     */
     @Override
     public String getCodeStart(JSONArray jsonArray) {
         for (int i = 0; i < jsonArray.length(); i++) {
@@ -73,6 +94,9 @@ public class ParameterCreatorImpl implements ParametrCreator {
         return null;
     }
 
+    /**
+     * @return параметр типа {@link String}
+     */
     @Override
     public String getCodeFinish(JSONArray jsonArray) {
         for (int i = 0; i < jsonArray.length(); i++) {
@@ -80,6 +104,4 @@ public class ParameterCreatorImpl implements ParametrCreator {
         }
         return null;
     }
-
-
 }

@@ -12,13 +12,11 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.sql.Date;
-import java.util.List;
 
 /**
  * Класс RefcursorRepositoryImpl предназначен для получения ответов из базы данных по созданным в ней функциям.

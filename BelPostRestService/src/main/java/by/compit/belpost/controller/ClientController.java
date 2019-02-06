@@ -1,6 +1,5 @@
 package by.compit.belpost.controller;
 
-import by.compit.belpost.entity.Response;
 import by.compit.belpost.exception.NotFoundException;
 import by.compit.belpost.srervice.ResponseGetter;
 import by.compit.belpost.util.ParametrCreator;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.text.ParseException;
-import java.util.ArrayList;
 
 /**
  * Класс ClientController предназначен для взаимодействия с пользователем через url

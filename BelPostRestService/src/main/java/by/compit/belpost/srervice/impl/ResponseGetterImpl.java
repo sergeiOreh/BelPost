@@ -1,6 +1,5 @@
 package by.compit.belpost.srervice.impl;
 
-import by.compit.belpost.entity.Response;
 import by.compit.belpost.exception.NotFoundException;
 import by.compit.belpost.repository.impl.RefcursorRepositoryImpl;
 import by.compit.belpost.srervice.ResponseGetter;
@@ -9,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.text.ParseException;
-import java.util.ArrayList;
 
 /**
  * Класс ResponseGetterImpl содержит реализацию методов по нахождению ответов в формате {@link JSONArray}.

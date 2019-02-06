@@ -14,13 +14,13 @@ import java.sql.SQLException;
 @Service
 public class ConnectionServiceImpl implements ConnectionService {
 
-    @Value("${spring.datasource.driverclassname}")
+    @Value("${datasource.driverclassname}")
     private String DRIVER;
-    @Value("${spring.datasource.url}")
+    @Value("${datasource.url}")
     private String URL;
-    @Value("${spring.datasource.username}")
+    @Value("${datasource.username}")
     private String USER;
-    @Value("${spring.datasource.password}")
+    @Value("${datasource.password}")
     private String PASSWORD;
 
     /**

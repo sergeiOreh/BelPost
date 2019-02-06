@@ -5,8 +5,6 @@ import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-
 /**
  * Класс ParameterCreatorImpl содержит реализацию методов по парсингу параметров из формата {@link JSONArray}.
  */

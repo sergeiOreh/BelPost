@@ -1,6 +1,5 @@
 package by.compit.belpost.config;
 
-import org.springframework.lang.Nullable;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 /**
@@ -12,15 +11,14 @@ public class ApplicationInitializer extends AbstractAnnotationConfigDispatcherSe
     /**
      * Происходит вызыв классов конфигурации при запуске приложения.
      */
-    @Nullable
     @Override
-    protected Class<?>[] getRootConfigClasses() {
+    protected Class[] getRootConfigClasses() {
         return new Class[] { ApplicationConfiguration.class };
     }
 
     @Override
-    protected Class<?>[] getServletConfigClasses() {
-        return new Class[0];
+    protected Class[] getServletConfigClasses() {
+        return null;
     }
 
     @Override

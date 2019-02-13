@@ -1,5 +1,6 @@
 package by.compit.belpost.srervice.impl;
 
+import by.compit.belpost.entity.Response;
 import by.compit.belpost.exception.NotFoundException;
 import by.compit.belpost.repository.impl.RefcursorRepositoryImpl;
 import by.compit.belpost.srervice.ResponseGetter;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.text.ParseException;
+import java.util.List;
 
 /**
  * Класс ResponseGetterImpl содержит реализацию методов по нахождению ответов в формате {@link JSONArray}.
@@ -26,7 +28,7 @@ public class ResponseGetterImpl implements ResponseGetter {
      * @return ответ в формате {@link JSONArray}
      */
     @Override
-    public JSONArray getResponseByPo(String code) throws NotFoundException {
+    public List<Response> getResponseByPo(String code) throws NotFoundException {
         return refcursorRepositoryImpl.getResponseByCode(code);
     }
 
@@ -34,7 +36,7 @@ public class ResponseGetterImpl implements ResponseGetter {
      * @return ответ в формате {@link JSONArray}
      */
     @Override
-    public JSONArray getResponseByLot(String login, String lotNum, String startDate, String endDate) throws ParseException, NotFoundException {
+    public List<Response> getResponseByLot(String login, String lotNum, String startDate, String endDate) throws ParseException, NotFoundException {
         return refcursorRepositoryImpl.getResponseByLot(login, lotNum, startDate, endDate);
     }
 
@@ -42,7 +44,7 @@ public class ResponseGetterImpl implements ResponseGetter {
      * @return ответ в формате {@link JSONArray}
      */
     @Override
-    public JSONArray getResponseByDiapason(String codeStart, String codeFinish) throws NotFoundException {
+    public List<Response> getResponseByDiapason(String codeStart, String codeFinish) throws NotFoundException {
         return refcursorRepositoryImpl.getResponseByDiapason(codeStart, codeFinish);
     }
 

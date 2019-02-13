@@ -1,5 +1,6 @@
 package by.compit.belpost.controller;
 
+import by.compit.belpost.entity.Response;
 import by.compit.belpost.exception.NotFoundException;
 import by.compit.belpost.srervice.ResponseGetter;
 import by.compit.belpost.util.ParametrCreator;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
+import java.util.List;
 
 /**
  * Класс ClientController предназначен для взаимодействия с пользователем через url
@@ -35,7 +37,7 @@ public class ClientController {
      * @throws NotFoundException, если нет ответа по данным параметрам
      */
     @RequestMapping(value = GET_OPER_4_PO_URL, method = RequestMethod.POST, consumes = "application/json", produces = "application/json; charset=utf-8")
-    public JSONArray getResponses4Po(@RequestBody String request) throws NotFoundException{
+    public List<Response> getResponses4Po(@RequestBody String request) throws NotFoundException{
 
         return responseGetter.getResponseByPo(parametrCreator.getCode(new JSONArray(request)));
     }
@@ -46,7 +48,7 @@ public class ClientController {
      * @throws ParseException, если введён неверный формат даты
      */
     @RequestMapping(value = GET_OPER_4_LOT_URL, method = RequestMethod.POST, consumes = "application/json", produces = "application/json; charset=utf-8")
-    public JSONArray getResponses4Lot(@RequestBody String request) throws ParseException, NotFoundException {
+    public List<Response> getResponses4Lot(@RequestBody String request) throws ParseException, NotFoundException {
 
         return responseGetter.getResponseByLot(parametrCreator.getLogin(new JSONArray(request)),
                 parametrCreator.getLotNum(new JSONArray(request)),
@@ -59,7 +61,7 @@ public class ClientController {
      * @throws NotFoundException, если нет ответа по данным параметрам
      */
     @RequestMapping(value = GET_OPER_4_DIAPASON_URL, method = RequestMethod.POST, consumes = "application/json", produces = "application/json; charset=utf-8")
-    public JSONArray getResponses4Diapason(@RequestBody String request) throws NotFoundException{
+    public List<Response> getResponses4Diapason(@RequestBody String request) throws NotFoundException{
 
         return responseGetter.getResponseByDiapason(parametrCreator.getCodeStart(new JSONArray(request)),
                 parametrCreator.getCodeFinish(new JSONArray(request)));

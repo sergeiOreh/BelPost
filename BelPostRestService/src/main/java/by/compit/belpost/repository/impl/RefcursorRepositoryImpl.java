@@ -17,6 +17,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Класс RefcursorRepositoryImpl предназначен для получения ответов из базы данных по созданным в ней функциям.
@@ -41,12 +43,12 @@ public class RefcursorRepositoryImpl implements RefcursorRepository {
      */
     @SuppressWarnings("Duplicates")
     @Override
-    public JSONArray getResponseByCode(String code) throws NotFoundException {
+    public List<Response> getResponseByCode(String code) throws NotFoundException {
 
         try {
             Connection con = connection.getConnection();
             Response response;
-            JSONArray responseList = new JSONArray();
+            List<Response> responseList = new ArrayList<>();
 
             String stmt = "{? = call PKG_EXP_PORTAL.GET_OPER_4_PO(?)}";
 
@@ -63,12 +65,12 @@ public class RefcursorRepositoryImpl implements RefcursorRepository {
                 response.setOperName(rs.getString(3));
                 response.setOrgCur(rs.getString(4));
                 response.setZipCodeNext(rs.getString(5));
-                responseList.put(response);
+                responseList.add(response);
             }
 
             st.close();
             con.close();
-            if (responseList.length() == 0) throw new NotFoundException();
+            if (responseList.size() == 0) throw new NotFoundException();
             return responseList;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -90,7 +92,7 @@ public class RefcursorRepositoryImpl implements RefcursorRepository {
      */
     @SuppressWarnings("Duplicates")
     @Override
-    public JSONArray getResponseByLot(String login, String lotNum, String startDate, String endDate) throws ParseException, NotFoundException {
+    public List<Response> getResponseByLot(String login, String lotNum, String startDate, String endDate) throws ParseException, NotFoundException {
         try {
 
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -99,7 +101,7 @@ public class RefcursorRepositoryImpl implements RefcursorRepository {
 
             Connection con = connection.getConnection();
             Response response;
-            JSONArray responseList = new JSONArray();
+            List<Response> responseList = new ArrayList<>();
 
             String stmt = "{? = call PKG_EXP_PORTAL.GET_OPER_4_LOT(?,?,?,?)}";
 
@@ -119,12 +121,12 @@ public class RefcursorRepositoryImpl implements RefcursorRepository {
                 response.setOperName(rs.getString(3));
                 response.setOrgCur(rs.getString(4));
                 response.setZipCodeNext(rs.getString(5));
-                responseList.put(response);
+                responseList.add(response);
             }
 
             st.close();
             con.close();
-            if (responseList.length() == 0) throw new NotFoundException();
+            if (responseList.size() == 0) throw new NotFoundException();
             return responseList;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -143,11 +145,11 @@ public class RefcursorRepositoryImpl implements RefcursorRepository {
      */
     @SuppressWarnings("Duplicates")
     @Override
-    public JSONArray getResponseByDiapason(String codeStart, String codeFinish) throws NotFoundException {
+    public List<Response> getResponseByDiapason(String codeStart, String codeFinish) throws NotFoundException {
         try {
             Connection con = connection.getConnection();
             Response response;
-            JSONArray responseList = new JSONArray();
+            List<Response> responseList = new ArrayList<>();
 
             String stmt = "{? = call PKG_EXP_PORTAL.GET_OPER_4_DIAPASON(?,?)}";
 
@@ -165,12 +167,12 @@ public class RefcursorRepositoryImpl implements RefcursorRepository {
                 response.setOperName(rs.getString(3));
                 response.setOrgCur(rs.getString(4));
                 response.setZipCodeNext(rs.getString(5));
-                responseList.put(response);
+                responseList.add(response);
             }
 
             st.close();
             con.close();
-            if (responseList.length() == 0) throw new NotFoundException();
+            if (responseList.size() == 0) throw new NotFoundException();
             return responseList;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());

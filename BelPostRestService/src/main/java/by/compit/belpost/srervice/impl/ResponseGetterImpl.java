@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,24 +29,44 @@ public class ResponseGetterImpl implements ResponseGetter {
      * @return ответ в формате {@link JSONArray}
      */
     @Override
-    public List<Response> getResponseByPo(String code) throws NotFoundException {
-        return refcursorRepositoryImpl.getResponseByCode(code);
+    public JSONArray getResponseByPo(ArrayList<String> codes) throws NotFoundException {
+        JSONArray response = new JSONArray();
+        for (String code : codes) {
+            response.put(refcursorRepositoryImpl.getResponseByCode(code));
+        }
+        return response;
     }
 
     /**
      * @return ответ в формате {@link JSONArray}
      */
     @Override
-    public List<Response> getResponseByLot(String login, String lotNum, String startDate, String endDate) throws ParseException, NotFoundException {
-        return refcursorRepositoryImpl.getResponseByLot(login, lotNum, startDate, endDate);
+    public JSONArray getResponseByLot(ArrayList<String> logins, ArrayList<String> lotNums, ArrayList<String> startDates, ArrayList<String> endDates) throws ParseException, NotFoundException {
+        JSONArray response = new JSONArray();
+        for (String login : logins) {
+            for (String lotNum : lotNums) {
+                for (String startDate : startDates) {
+                    for (String endDate : endDates) {
+                        refcursorRepositoryImpl.getResponseByLot(login, lotNum, startDate, endDate);
+                    }
+                }
+            }
+        }
+        return response;
     }
 
     /**
      * @return ответ в формате {@link JSONArray}
      */
     @Override
-    public List<Response> getResponseByDiapason(String codeStart, String codeFinish) throws NotFoundException {
-        return refcursorRepositoryImpl.getResponseByDiapason(codeStart, codeFinish);
+    public JSONArray getResponseByDiapason(ArrayList<String> codesStart, ArrayList<String> codesFinish) throws NotFoundException {
+        JSONArray response = new JSONArray();
+        for (String codeStart : codesStart) {
+            for (String codeFinish : codesFinish) {
+                response.put(refcursorRepositoryImpl.getResponseByDiapason(codeStart, codeFinish));
+            }
+        }
+        return response;
     }
 
 }

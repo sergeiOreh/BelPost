@@ -43,12 +43,12 @@ public class RefcursorRepositoryImpl implements RefcursorRepository {
      */
     @SuppressWarnings("Duplicates")
     @Override
-    public List<Response> getResponseByCode(String code) throws NotFoundException {
+    public ArrayList<Response> getResponseByCode(String code) throws NotFoundException {
 
         try {
             Connection con = connection.getConnection();
             Response response;
-            List<Response> responseList = new ArrayList<>();
+            ArrayList<Response> responseList = new ArrayList<>();
 
             String stmt = "{? = call PKG_EXP_PORTAL.GET_OPER_4_PO(?)}";
 
@@ -92,7 +92,7 @@ public class RefcursorRepositoryImpl implements RefcursorRepository {
      */
     @SuppressWarnings("Duplicates")
     @Override
-    public List<Response> getResponseByLot(String login, String lotNum, String startDate, String endDate) throws ParseException, NotFoundException {
+    public ArrayList<Response> getResponseByLot(String login, String lotNum, String startDate, String endDate) throws ParseException, NotFoundException {
         try {
 
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -101,7 +101,7 @@ public class RefcursorRepositoryImpl implements RefcursorRepository {
 
             Connection con = connection.getConnection();
             Response response;
-            List<Response> responseList = new ArrayList<>();
+            ArrayList<Response> responseList = new ArrayList<>();
 
             String stmt = "{? = call PKG_EXP_PORTAL.GET_OPER_4_LOT(?,?,?,?)}";
 
@@ -145,11 +145,11 @@ public class RefcursorRepositoryImpl implements RefcursorRepository {
      */
     @SuppressWarnings("Duplicates")
     @Override
-    public List<Response> getResponseByDiapason(String codeStart, String codeFinish) throws NotFoundException {
+    public ArrayList<Response> getResponseByDiapason(String codeStart, String codeFinish) throws NotFoundException {
         try {
             Connection con = connection.getConnection();
             Response response;
-            List<Response> responseList = new ArrayList<>();
+            ArrayList<Response> responseList = new ArrayList<>();
 
             String stmt = "{? = call PKG_EXP_PORTAL.GET_OPER_4_DIAPASON(?,?)}";
 

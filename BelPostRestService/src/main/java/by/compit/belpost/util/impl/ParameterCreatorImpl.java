@@ -5,6 +5,8 @@ import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+
 /**
  * Класс ParameterCreatorImpl содержит реализацию методов по парсингу параметров из формата {@link JSONArray}.
  */
@@ -30,76 +32,83 @@ public class ParameterCreatorImpl implements ParametrCreator {
      * @return параметр типа {@link String}
      */
     @Override
-    public String getCode(JSONArray jsonArray) {
+    public ArrayList<String> getCode(JSONArray jsonArray) {
+        ArrayList<String> parameters = new ArrayList<>();
         for (int i = 0; i < jsonArray.length(); i++) {
-            return jsonArray.getJSONObject(i).getString(CODE_PARAMETER);
+            parameters.add(jsonArray.getJSONObject(i).getString(CODE_PARAMETER));
         }
-        return null;
+        return parameters;
     }
 
     /**
      * @return параметр типа {@link String}
      */
     @Override
-    public String getLogin(JSONArray jsonArray) {
+    public ArrayList<String> getLogin(JSONArray jsonArray) {
+        ArrayList<String> parameters = new ArrayList<>();
         for (int i = 0; i < jsonArray.length(); i++) {
-            return jsonArray.getJSONObject(i).getString(LOGIN_PARAMETER);
+            parameters.add(jsonArray.getJSONObject(i).getString(LOGIN_PARAMETER));
         }
-        return null;
+        return parameters;
     }
 
     /**
      * @return параметр типа {@link String}
      */
     @Override
-    public String getLotNum(JSONArray jsonArray) {
+    public ArrayList<String> getLotNum(JSONArray jsonArray) {
+        ArrayList<String> parameters = new ArrayList<>();
         for (int i = 0; i < jsonArray.length(); i++) {
-            return jsonArray.getJSONObject(i).getString(LOT_NUM_PARAMETER);
+            parameters.add(jsonArray.getJSONObject(i).getString(LOT_NUM_PARAMETER));
         }
-        return null;
+        return parameters;
     }
 
     /**
      * @return параметр типа {@link String}
      */
     @Override
-    public String getStartDate(JSONArray jsonArray) {
+    public ArrayList<String> getStartDate(JSONArray jsonArray) {
+        ArrayList<String> parameters = new ArrayList<>();
         for (int i = 0; i < jsonArray.length(); i++) {
-            return jsonArray.getJSONObject(i).getString(START_DATE_PARAMETER);
+            parameters.add(jsonArray.getJSONObject(i).getString(START_DATE_PARAMETER));
         }
-        return null;
+        return parameters;
     }
 
     /**
      * @return параметр типа {@link String}
      */
     @Override
-    public String getEndDate(JSONArray jsonArray) {
+    public ArrayList<String> getEndDate(JSONArray jsonArray) {
+        ArrayList<String> parameters = new ArrayList<>();
         for (int i = 0; i < jsonArray.length(); i++) {
-            return jsonArray.getJSONObject(i).getString(END_DATE_PARAMETER);
+            parameters.add(jsonArray.getJSONObject(i).getString(END_DATE_PARAMETER));
         }
-        return null;
+        return parameters;
     }
 
     /**
      * @return параметр типа {@link String}
      */
     @Override
-    public String getCodeStart(JSONArray jsonArray) {
+    public ArrayList<String> getCodeStart(JSONArray jsonArray) {
+        ArrayList<String> parameters = new ArrayList<>();
         for (int i = 0; i < jsonArray.length(); i++) {
-            return jsonArray.getJSONObject(i).getString(CODE_START_PARAMETER);
+            parameters.add(jsonArray.getJSONObject(i).getString(CODE_START_PARAMETER));
         }
-        return null;
+        return parameters;
     }
 
     /**
      * @return параметр типа {@link String}
      */
     @Override
-    public String getCodeFinish(JSONArray jsonArray) {
+    public ArrayList<String> getCodeFinish(JSONArray jsonArray) {
+        ArrayList<String> parameters = new ArrayList<>();
         for (int i = 0; i < jsonArray.length(); i++) {
-            return jsonArray.getJSONObject(i).getString(CODE_FINISH_PARAMETER);
+            parameters.add(jsonArray.getJSONObject(i).getString(CODE_FINISH_PARAMETER));
         }
-        return null;
+        return parameters;
     }
 }

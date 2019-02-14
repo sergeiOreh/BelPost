@@ -37,13 +37,13 @@ public class RefcursorRepositoryImpl implements RefcursorRepository {
     /**
      * Возвращает список ответов по переданному в функцию параметру.
      *
-     * @param code - переданный в функцию параметр
+     * @param codes - переданная в функцию коллекция
      * @return список ответов
      * @throws NotFoundException, если нет ответа по данным параметрам
      */
     @SuppressWarnings("Duplicates")
     @Override
-    public ArrayList<Response> getResponseByCode(String code) throws NotFoundException {
+    public ArrayList<Response> getResponseByCodes(ArrayList<String> codes) throws NotFoundException {
 
         try {
             Connection con = connection.getConnection();
@@ -52,23 +52,24 @@ public class RefcursorRepositoryImpl implements RefcursorRepository {
 
             String stmt = "{? = call PKG_EXP_PORTAL.GET_OPER_4_PO(?)}";
 
-            OracleCallableStatement st =
-                    (OracleCallableStatement) con.prepareCall(stmt);
-            st.registerOutParameter(1, OracleTypes.CURSOR);
-            st.setString(2, code);
-            st.execute();
-            ResultSet rs = st.getCursor(1);
-            while (rs.next()) {
-                response = new Response();
-                response.setCode(rs.getString(1));
-                response.setOtoDate(rs.getString(2));
-                response.setOperName(rs.getString(3));
-                response.setOrgCur(rs.getString(4));
-                response.setZipCodeNext(rs.getString(5));
-                responseList.add(response);
+            for (String code : codes) {
+                OracleCallableStatement st =
+                        (OracleCallableStatement) con.prepareCall(stmt);
+                st.registerOutParameter(1, OracleTypes.CURSOR);
+                st.setString(2, code);
+                st.execute();
+                ResultSet rs = st.getCursor(1);
+                while (rs.next()) {
+                    response = new Response();
+                    response.setCode(rs.getString(1));
+                    response.setOtoDate(rs.getString(2));
+                    response.setOperName(rs.getString(3));
+                    response.setOrgCur(rs.getString(4));
+                    response.setZipCodeNext(rs.getString(5));
+                    responseList.add(response);
+                }
+                st.close();
             }
-
-            st.close();
             con.close();
             if (responseList.size() == 0) throw new NotFoundException();
             return responseList;
@@ -82,22 +83,20 @@ public class RefcursorRepositoryImpl implements RefcursorRepository {
     /**
      * Возвращает список ответов по переданному в функцию параметру.
      *
-     * @param login - переданный в функцию параметр
-     * @param lotNum - переданный в функцию параметр
-     * @param startDate - переданный в функцию параметр
-     * @param endDate - переданный в функцию параметр
+     * @param logins     - переданный в функцию параметр
+     * @param lotNums    - переданный в функцию параметр
+     * @param startDates - переданный в функцию параметр
+     * @param endDates   - переданный в функцию параметр
      * @return список ответов
      * @throws NotFoundException, если нет ответа по данным параметрам
-     * @throws ParseException, если введён неверный формат даты
+     * @throws ParseException,    если введён неверный формат даты
      */
     @SuppressWarnings("Duplicates")
     @Override
-    public ArrayList<Response> getResponseByLot(String login, String lotNum, String startDate, String endDate) throws ParseException, NotFoundException {
+    public ArrayList<Response> getResponseByLot(ArrayList<String> logins, ArrayList<String> lotNums, ArrayList<String> startDates, ArrayList<String> endDates) throws ParseException, NotFoundException {
         try {
 
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            java.util.Date start = formatter.parse(startDate);
-            java.util.Date end = formatter.parse(endDate);
 
             Connection con = connection.getConnection();
             Response response;
@@ -105,26 +104,39 @@ public class RefcursorRepositoryImpl implements RefcursorRepository {
 
             String stmt = "{? = call PKG_EXP_PORTAL.GET_OPER_4_LOT(?,?,?,?)}";
 
-            OracleCallableStatement st =
-                    (OracleCallableStatement) con.prepareCall(stmt);
-            st.registerOutParameter(1, OracleTypes.CURSOR);
-            st.setString(2, login);
-            st.setString(3, lotNum);
-            st.setDate(4, new Date(start.getTime()));
-            st.setDate(5, new Date(end.getTime()));
-            st.execute();
-            ResultSet rs = st.getCursor(1);
-            while (rs.next()) {
-                response = new Response();
-                response.setCode(rs.getString(1));
-                response.setOtoDate(rs.getString(2));
-                response.setOperName(rs.getString(3));
-                response.setOrgCur(rs.getString(4));
-                response.setZipCodeNext(rs.getString(5));
-                responseList.add(response);
-            }
+            for (int i = 0; i < logins.size(); i++) {
+                for (int i1 = 0; i1 < lotNums.size(); i1++) {
+                    for (int i2 = 0; i2 < startDates.size(); i2++) {
+                        for (int i3 = 0; i3 < endDates.size(); i3++) {
+                            if (i == i1 & i == i2 & i == i3) {
 
-            st.close();
+                                java.util.Date start = formatter.parse(startDates.get(i2));
+                                java.util.Date end = formatter.parse(endDates.get(i3));
+
+                                OracleCallableStatement st =
+                                        (OracleCallableStatement) con.prepareCall(stmt);
+                                st.registerOutParameter(1, OracleTypes.CURSOR);
+                                st.setString(2, logins.get(i));
+                                st.setString(3, lotNums.get(i1));
+                                st.setDate(4, new Date(start.getTime()));
+                                st.setDate(5, new Date(end.getTime()));
+                                st.execute();
+                                ResultSet rs = st.getCursor(1);
+                                while (rs.next()) {
+                                    response = new Response();
+                                    response.setCode(rs.getString(1));
+                                    response.setOtoDate(rs.getString(2));
+                                    response.setOperName(rs.getString(3));
+                                    response.setOrgCur(rs.getString(4));
+                                    response.setZipCodeNext(rs.getString(5));
+                                    responseList.add(response);
+                                }
+                                st.close();
+                            }
+                        }
+                    }
+                }
+            }
             con.close();
             if (responseList.size() == 0) throw new NotFoundException();
             return responseList;
@@ -138,14 +150,14 @@ public class RefcursorRepositoryImpl implements RefcursorRepository {
     /**
      * Возвращает список ответов по переданному в функцию параметру.
      *
-     * @param codeStart - переданный в функцию параметр
-     * @param codeFinish - переданный в функцию параметр
+     * @param codesStart  - переданный в функцию параметр
+     * @param codesFinish - переданный в функцию параметр
      * @return список ответов
      * @throws NotFoundException, если нет ответа по данным параметрам
      */
     @SuppressWarnings("Duplicates")
     @Override
-    public ArrayList<Response> getResponseByDiapason(String codeStart, String codeFinish) throws NotFoundException {
+    public ArrayList<Response> getResponseByDiapasons(ArrayList<String> codesStart, ArrayList<String> codesFinish) throws NotFoundException {
         try {
             Connection con = connection.getConnection();
             Response response;
@@ -153,24 +165,29 @@ public class RefcursorRepositoryImpl implements RefcursorRepository {
 
             String stmt = "{? = call PKG_EXP_PORTAL.GET_OPER_4_DIAPASON(?,?)}";
 
-            OracleCallableStatement st =
-                    (OracleCallableStatement) con.prepareCall(stmt);
-            st.registerOutParameter(1, OracleTypes.CURSOR);
-            st.setString(2, codeStart);
-            st.setString(3, codeFinish);
-            st.execute();
-            ResultSet rs = st.getCursor(1);
-            while (rs.next()) {
-                response = new Response();
-                response.setCode(rs.getString(1));
-                response.setOtoDate(rs.getString(2));
-                response.setOperName(rs.getString(3));
-                response.setOrgCur(rs.getString(4));
-                response.setZipCodeNext(rs.getString(5));
-                responseList.add(response);
+            for (int x = 0; x < codesStart.size(); x++) {
+                for (int y = 0; y < codesFinish.size(); y++) {
+                    if (x == y) {
+                        OracleCallableStatement st =
+                                (OracleCallableStatement) con.prepareCall(stmt);
+                        st.registerOutParameter(1, OracleTypes.CURSOR);
+                        st.setString(2, codesStart.get(x));
+                        st.setString(3, codesFinish.get(y));
+                        st.execute();
+                        ResultSet rs = st.getCursor(1);
+                        while (rs.next()) {
+                            response = new Response();
+                            response.setCode(rs.getString(1));
+                            response.setOtoDate(rs.getString(2));
+                            response.setOperName(rs.getString(3));
+                            response.setOrgCur(rs.getString(4));
+                            response.setZipCodeNext(rs.getString(5));
+                            responseList.add(response);
+                        }
+                        st.close();
+                    }
+                }
             }
-
-            st.close();
             con.close();
             if (responseList.size() == 0) throw new NotFoundException();
             return responseList;

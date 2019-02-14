@@ -10,9 +10,9 @@ import java.util.List;
 
 public interface RefcursorRepository {
 
-    ArrayList<Response> getResponseByCode(String code) throws NotFoundException;
+    ArrayList<Response> getResponseByCodes(ArrayList<String> codes) throws NotFoundException;
 
-    ArrayList<Response> getResponseByLot(String login, String lotNum, String startDate, String endDate) throws ParseException, NotFoundException;
+    ArrayList<Response> getResponseByLot(ArrayList<String> logins, ArrayList<String> lotNums, ArrayList<String> startDates, ArrayList<String> endDates) throws ParseException, NotFoundException;
 
-    ArrayList<Response> getResponseByDiapason(String codeStart, String codeFinish) throws NotFoundException;
+    ArrayList<Response> getResponseByDiapasons(ArrayList<String> codesStart, ArrayList<String> codesFinish) throws NotFoundException;
 }

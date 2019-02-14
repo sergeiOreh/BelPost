@@ -10,11 +10,11 @@ import java.util.List;
 
 public interface ResponseGetter {
 
-    JSONArray getResponseByPo(ArrayList<String> codes) throws NotFoundException;
+    ArrayList<Response> getResponseByPo(ArrayList<String> codes) throws NotFoundException;
 
-    JSONArray getResponseByLot(ArrayList<String> logins, ArrayList<String> lotNums, ArrayList<String> startDates, ArrayList<String> endDates) throws ParseException, NotFoundException;
+    ArrayList<Response> getResponseByLot(ArrayList<String> logins, ArrayList<String> lotNums, ArrayList<String> startDates, ArrayList<String> endDates) throws ParseException, NotFoundException;
 
-    JSONArray getResponseByDiapason(ArrayList<String> codesStart, ArrayList<String> codesFinish) throws NotFoundException;
+    ArrayList<Response> getResponseByDiapason(ArrayList<String> codesStart, ArrayList<String> codesFinish) throws NotFoundException;
 
 
 }
